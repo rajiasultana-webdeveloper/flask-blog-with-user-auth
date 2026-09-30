@@ -1,0 +1,69 @@
+{% extends 'root.html' %}
+
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <!-- ছবির সাইজ ও গোল আকার ঠিক রাখার জন্য স্টাইল যোগ করা হয়েছে -->
+        <img class="rounded-circle account-img" src="{{ image_file }}"
+            style="width: 125px; height: 125px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+        </div>
+    </div>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Account Information </legend>
+
+            <!-- ইউজারনেম ফিল্ড -->
+            <div class="form-group mb-3">
+                {{ form.username.label(class="form-control-label") }}
+                {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.username(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <!-- ইমেইল ফিল্ড -->
+            <div class="form-group mb-3">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <!-- ছবি আপলোড করার ফিল্ড -->
+            <div class="form-group mb-3">
+                {{ form.picture.label(class="form-control-label") }}
+                {{ form.picture(class="form-control-file") }}
+                {% if form.picture.errors %}
+                {% for error in form.picture.errors %}
+                <span class="text-danger"><br>{{ error }}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <!-- সাবমিট বাটনটি fieldset এর বাইরে নিচে নিয়ে আসা হয়েছে -->
+        <div class="form-group mt-3">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
